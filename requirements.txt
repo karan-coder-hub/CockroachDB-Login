@@ -1,0 +1,6 @@
+Flask
+gunicorn
+# agar DB use kar rahe ho to:
+psycopg2-binary   # Postgres
+Flask-Migrate     # agar migrations hain
+python-dotenv     # local .env support (optional)

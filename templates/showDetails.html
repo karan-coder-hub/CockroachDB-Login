@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      text-align: center;
+      margin: 50px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="data:image/jpeg;base64,{{ image }}" alt="User Image">
+    <h2>{{ name }}</h2>
+    <p><strong>Age:</strong> {{ age }}</p>
+    <p><strong>Gender:</strong> {{ gender }}</p>
+    <p><strong>Address:</strong> {{ address }}</p>
+  </div>
+</body>
+</html>
