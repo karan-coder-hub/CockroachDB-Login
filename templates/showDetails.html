@@ -1,34 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Details</title>
   <style>
+    /* ===== GLOBAL STYLE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      text-align: center;
-      margin: 50px;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      overflow: hidden;
+      perspective: 1000px;
     }
+
+    /* ===== BACKGROUND FLOATING ELEMENTS ===== */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 8s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    .circle:nth-child(1) {
+      width: 250px;
+      height: 250px;
+      top: 10%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+      width: 350px;
+      height: 350px;
+      bottom: 15%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+
+    .circle:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      top: 65%;
+      left: 50%;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+
+    /* ===== CARD STYLING ===== */
     .card {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      transform: rotateY(15deg);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: floatCard 6s infinite ease-in-out;
+      position: relative;
+      z-index: 1;
     }
+
+    .card:hover {
+      transform: rotateY(0deg) scale(1.08);
+      box-shadow: 0 0 35px #00d4ff;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: rotateY(15deg) translateY(0px); }
+      50% { transform: rotateY(-15deg) translateY(-10px); }
+    }
+
+    /* ===== IMAGE ===== */
     img {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 20px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 15px #00d4ff;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
+
+    .card:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #00d4ff;
+    }
+
+    /* ===== TEXT ===== */
     h2 {
-      color: #333;
+      margin-bottom: 10px;
+      color: #00d4ff;
+      text-shadow: 0 0 15px #00d4ff;
+    }
+
+    p {
+      font-size: 15px;
+      color: #eee;
+      margin: 6px 0;
+    }
+
+    strong {
+      color: #00d4ff;
+      text-shadow: 0 0 10px #00d4ff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 450px) {
+      .card {
+        width: 90%;
+        padding: 30px 20px;
+      }
+      img {
+        width: 120px;
+        height: 120px;
+      }
+      h2 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Floating Background Elements -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <!-- User Detail Card -->
   <div class="card">
     <img src="data:image/jpeg;base64,{{ image }}" alt="User Image">
     <h2>{{ name }}</h2>
