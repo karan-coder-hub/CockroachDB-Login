@@ -1,16 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Animated Login Page</title>
+  <style>
+    /* ====== GLOBAL STYLING ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    /* ====== ANIMATED BACKGROUND ELEMENTS ====== */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 8s infinite ease-in-out;
+    }
+
+    .circle:nth-child(1) {
+      width: 200px;
+      height: 200px;
+      top: 10%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      bottom: 15%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+
+    .circle:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      left: 50%;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+
+    /* ====== LOGIN CONTAINER ====== */
+    .login-container {
+      width: 350px;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      transform: rotateY(15deg);
+      animation: floatCard 6s infinite ease-in-out;
+      transition: transform 0.4s ease;
+    }
+
+    .login-container:hover {
+      transform: rotateY(0deg) scale(1.05);
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: rotateY(15deg) translateY(0px); }
+      50% { transform: rotateY(-15deg) translateY(-10px); }
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px #00d4ff;
+    }
+
+    /* ====== FORM INPUTS ====== */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px #00d4ff;
+    }
+
+    /* ====== SUBMIT BUTTON ====== */
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00d4ff;
+    }
+
+    /* ====== RESPONSIVE DESIGN ====== */
+    @media (max-width: 400px) {
+      .login-container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Login Form</h2>
-  <form method="POST" action="/login">
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
-    <button type="submit">Login</button>
-  </form>
+  <!-- 3D Floating Circles Background -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <!-- LOGIN BOX -->
+  <div class="login-container">
+    <h2>Login Form</h2>
+    <form method="POST" action="/login">
+      <label>Email:</label>
+      <input type="email" name="email" required placeholder="Enter your email" />
+      
+      <label>Password:</label>
+      <input type="password" name="password" required placeholder="Enter your password" />
+      
+      <button type="submit">Login</button>
+    </form>
+  </div>
 </body>
 </html>
