@@ -1,32 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Details Form</title>
+  <style>
+    /* ===== GLOBAL STYLING ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    /* ===== FLOATING BACKGROUND CIRCLES ===== */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 8s infinite ease-in-out;
+    }
+
+    .circle:nth-child(1) {
+      width: 220px;
+      height: 220px;
+      top: 15%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      bottom: 10%;
+      right: 15%;
+      animation-delay: 3s;
+    }
+
+    .circle:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      top: 60%;
+      left: 55%;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(10deg); }
+    }
+
+    /* ===== FORM CONTAINER ===== */
+    .form-container {
+      width: 400px;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      transform: rotateY(15deg);
+      animation: floatCard 6s infinite ease-in-out;
+      transition: transform 0.4s ease;
+    }
+
+    .form-container:hover {
+      transform: rotateY(0deg) scale(1.05);
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: rotateY(15deg) translateY(0px); }
+      50% { transform: rotateY(-15deg) translateY(-10px); }
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px #00d4ff;
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    textarea {
+      resize: none;
+      height: 70px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px #00d4ff;
+    }
+
+    select option {
+      color: #000;
+    }
+
+    /* ===== BUTTON ===== */
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00d4ff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 450px) {
+      .form-container {
+        width: 90%;
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Fill Your Details</h2>
-  <form method="POST" action="/submit_details" enctype="multipart/form-data">
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+  <!-- Floating Background Circles -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
 
-    <label>Age:</label><br>
-    <input type="number" name="age" required><br><br>
+  <!-- User Details Form -->
+  <div class="form-container">
+    <h2>Fill Your Details</h2>
+    <form method="POST" action="/submit_details" enctype="multipart/form-data">
+      <label>Name:</label>
+      <input type="text" name="name" required placeholder="Enter your name">
 
-    <label>Gender:</label><br>
-    <select name="gender" required>
-      <option value="">Select</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select><br><br>
+      <label>Age:</label>
+      <input type="number" name="age" required placeholder="Enter your age">
 
-    <label>Address:</label><br>
-    <textarea name="address" required></textarea><br><br>
+      <label>Gender:</label>
+      <select name="gender" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
 
-    <label>Upload Image:</label><br>
-    <input type="file" name="image" accept="image/*" required><br><br>
+      <label>Address:</label>
+      <textarea name="address" required placeholder="Enter your address"></textarea>
 
-    <button type="submit">Submit Details</button>
-  </form>
+      <label>Upload Image:</label>
+      <input type="file" name="image" accept="image/*" required>
+
+      <button type="submit">Submit Details</button>
+    </form>
+  </div>
 </body>
 </html>
