@@ -65,7 +65,8 @@ def submit_details():
     cur.close()
     conn.close()
 
-    return redirect(url_for('show_details'))
+    # ✅ Redirect to all_details page instead of show_details
+    return redirect(url_for('all_details'))
 
 # --- SHOW LAST ENTERED DETAILS ---
 @app.route('/show_details')
