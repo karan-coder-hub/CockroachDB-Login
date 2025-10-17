@@ -98,7 +98,7 @@ def show_details():
 def all_details():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT email, name, age, gender, address, image FROM user_details ORDER BY created_at DESC")
+    cur.execute("SELECT name, age, gender, address, image FROM user_details ORDER BY created_at DESC")
     rows = cur.fetchall()
     cur.close()
     conn.close()
@@ -106,10 +106,9 @@ def all_details():
     # Convert images to base64
     all_users = []
     for row in rows:
-        email, name, age, gender, address, image_data = row
+        name, age, gender, address, image_data = row
         image_base64 = base64.b64encode(image_data).decode('utf-8')
         all_users.append({
-            'email': email,
             'name': name,
             'age': age,
             'gender': gender,
