@@ -2,24 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import psycopg2
 import os
 import base64
-from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
-# Load .env file
-load_dotenv()
+# --- CockroachDB Connection ---
+DB_URL = "postgresql://karan:Uwq7W2xtJJEwvb7t15QxRQ@wiser-hound-16720.j77.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&sslrootcert=root.crt"
 
-# --- SUPABASE POSTGRESQL CONNECTION ---
 def get_db_connection():
-    return psycopg2.connect(
-        host=os.getenv("HOST"),
-        port=os.getenv("PORT"),
-        user=os.getenv("USER"),
-        password=os.getenv("PASSWORD"),
-        dbname=os.getenv("DBNAME"),
-        sslmode="require"
-    )
+    return psycopg2.connect(DB_URL)
 
 # --- LOGIN PAGE ---
 @app.route('/')
@@ -33,7 +24,7 @@ def do_login():
 
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM users1 WHERE email=%s AND password=%s", (email, password))
+    cur.execute("SELECT * FROM users WHERE email=%s AND password=%s", (email, password))
     user = cur.fetchone()
     cur.close()
     conn.close()
@@ -74,6 +65,7 @@ def submit_details():
     cur.close()
     conn.close()
 
+    # ✅ Redirect to all_details page instead of show_details
     return redirect(url_for('all_details'))
 
 # --- SHOW LAST ENTERED DETAILS ---
@@ -85,12 +77,11 @@ def show_details():
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("""
-        SELECT name, age, gender, address, image 
+        SELECT name, age, gender, address, image
         FROM user_details
         WHERE email = %s
-        ORDER BY created_at DESC LIMIT 1
+        ORDER BY id DESC LIMIT 1
     """, (session['user_email'],))
-    
     result = cur.fetchone()
     cur.close()
     conn.close()
@@ -112,6 +103,7 @@ def all_details():
     cur.close()
     conn.close()
 
+    # Convert images to base64
     all_users = []
     for row in rows:
         name, age, gender, address, image_data = row
@@ -131,19 +123,58 @@ if __name__ == '__main__':
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # from flask import Flask, render_template, request, redirect, url_for, session
 # import psycopg2
 # import os
 # import base64
+# from dotenv import load_dotenv
 
 # app = Flask(__name__)
 # app.secret_key = "your_secret_key"
 
-# # --- CockroachDB Connection ---
-# DB_URL = "postgresql://karan:Uwq7W2xtJJEwvb7t15QxRQ@wiser-hound-16720.j77.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&sslrootcert=root.crt"
+# # Load .env file
+# load_dotenv()
 
+# # --- SUPABASE POSTGRESQL CONNECTION ---
 # def get_db_connection():
-#     return psycopg2.connect(DB_URL)
+#     return psycopg2.connect(
+#         host=os.getenv("HOST"),
+#         port=os.getenv("PORT"),
+#         user=os.getenv("USER"),
+#         password=os.getenv("PASSWORD"),
+#         dbname=os.getenv("DBNAME"),
+#         sslmode="require"
+#     )
 
 # # --- LOGIN PAGE ---
 # @app.route('/')
@@ -157,7 +188,7 @@ if __name__ == '__main__':
 
 #     conn = get_db_connection()
 #     cur = conn.cursor()
-#     cur.execute("SELECT * FROM users WHERE email=%s AND password=%s", (email, password))
+#     cur.execute("SELECT * FROM users1 WHERE email=%s AND password=%s", (email, password))
 #     user = cur.fetchone()
 #     cur.close()
 #     conn.close()
@@ -198,7 +229,6 @@ if __name__ == '__main__':
 #     cur.close()
 #     conn.close()
 
-#     # ✅ Redirect to all_details page instead of show_details
 #     return redirect(url_for('all_details'))
 
 # # --- SHOW LAST ENTERED DETAILS ---
@@ -210,11 +240,12 @@ if __name__ == '__main__':
 #     conn = get_db_connection()
 #     cur = conn.cursor()
 #     cur.execute("""
-#         SELECT name, age, gender, address, image
+#         SELECT name, age, gender, address, image 
 #         FROM user_details
 #         WHERE email = %s
-#         ORDER BY id DESC LIMIT 1
+#         ORDER BY created_at DESC LIMIT 1
 #     """, (session['user_email'],))
+    
 #     result = cur.fetchone()
 #     cur.close()
 #     conn.close()
@@ -236,7 +267,6 @@ if __name__ == '__main__':
 #     cur.close()
 #     conn.close()
 
-#     # Convert images to base64
 #     all_users = []
 #     for row in rows:
 #         name, age, gender, address, image_data = row
@@ -253,3 +283,6 @@ if __name__ == '__main__':
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
+
+
+
